@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Cerebro Extendido · Pancho v1.0</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Ir al Dashboard">
+        <img src="assets/img/logo.svg" alt="Cerebro Extendido">
+        <div class="title">
+          <strong>Cerebro Extendido</strong>
+          <span>Dashboard TDAH · Pancho v1.0</span>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="btn small" data-nav href="index.html">🏠 Dashboard</a>
+        <a class="btn small" data-nav href="pages/weekly.html">🗓️ Semana</a>
+        <a class="btn small" data-nav href="pages/manual.html">📘 Manual</a>
+        <a class="btn small" data-nav href="pages/data.html">📊 Datos</a>
+      </nav>
+    </div>
+    <div class="topbar-inner" style="padding-top:0; padding-bottom:12px">
+      <div class="row" style="gap:8px">
+        <span class="pill">Controles inclusivos</span>
+        <button class="btn small" id="btnTheme" title="Tema">🌙/☀️ Tema</button>
+        <button class="btn small" id="btnContrast" title="Alto contraste">♿ Contraste</button>
+        <button class="btn small" id="btnFontDown" title="Disminuir tamaño de letra">A−</button>
+        <button class="btn small" id="btnFontUp" title="Aumentar tamaño de letra">A+</button>
+        <button class="btn small" id="btnNarrator" aria-pressed="false" title="Narrador">🔈 Narrador: OFF</button>
+        <button class="btn small" id="btnFocus" title="Modo Hoy (ultra-foco)">🧠 Modo Hoy</button>
+        <button class="btn small" id="btnCrisis" title="Modo saturación">🚨 Estoy saturado</button>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn small ghost" id="btnExport" title="Exportar backup JSON">⬇️ Exportar</button>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+        <button class="btn small ghost" id="btnImport" title="Importar backup JSON">⬆️ Importar</button>
+        <button class="btn small ghost" id="btnReset" title="Reiniciar datos locales">🧹 Reset</button>
+      </div>
+    </div>
+  </header>
+  <main class="container" role="main">
+
+    <section class="grid" aria-label="Resumen">
+      <div class="card col-8 focus-keep">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🎯 Hoy (método 1–3–5)</h2>
+            <p>Si sale la <strong>1 crítica</strong>, el día fue exitoso. Lo demás es ganancia.</p>
+          </div>
+          <div class="tags">
+            <span class="badge">🔥 Racha crítica: <strong id="streak">0 días</strong></span>
+            <span class="tag warn" id="energyBadge">Energía: Sin datos</span>
+            <button class="btn small" id="criticalDone">✅ Marcar crítica hecha</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row" style="justify-content:space-between; margin-bottom:10px">
+            <div class="mini" id="energyRec">Recomendación: Gestionar</div>
+            <button class="btn small ghost" id="applySuggestedMode">🎛️ Aplicar a Bloque 1</button>
+          </div>
+          <div class="timer focus-only" id="timerWrap" style="display:none">
+            <div class="label" id="timerLabel">Timer</div>
+            <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="time" id="timerTime">25:00</div>
+              <div class="row">
+                <button class="btn small" id="timerStop">⏹️ Detener</button>
+                <button class="btn small" id="timerDone">✅ Registrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row focus-only" style="margin:10px 0 2px">
+            <button class="btn" id="timer25">⏱️ 25 min</button>
+            <button class="btn" id="timer50">⏱️ 50 min</button>
+          </div>
+
+          <div class="cols">
+            <div class="col-6">
+              <label class="mini">1 Crítica</label>
+              <input class="input" id="tCritical" placeholder="Ej: Enviar correo clave / cerrar demo / preparar documento">
+              <div class="hr"></div>
+              <label class="mini">3 Importantes</label>
+              <div class="list">
+                <input class="input" id="tImp1" placeholder="Importante 1">
+                <input class="input" id="tImp2" placeholder="Importante 2">
+                <input class="input" id="tImp3" placeholder="Importante 3">
+              </div>
+            </div>
+            <div class="col-6">
+              <label class="mini">5 Menores</label>
+              <div class="list">
+                <input class="input" id="tMin1" placeholder="Menor 1">
+                <input class="input" id="tMin2" placeholder="Menor 2">
+                <input class="input" id="tMin3" placeholder="Menor 3">
+                <input class="input" id="tMin4" placeholder="Menor 4">
+                <input class="input" id="tMin5" placeholder="Menor 5">
+              </div>
+              <div class="hr"></div>
+              <label class="mini">Notas</label>
+              <textarea id="tNotes" class="input" placeholder="Pendientes sueltos, recordatorios, contexto..."></textarea>
+            </div>
+          </div>
+          <div class="row" style="margin-top:12px; justify-content:flex-end">
+            <button class="btn" id="todaySave">💾 Guardar Hoy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-4 focus-keep">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>📥 INBOX (descarga mental)</h2>
+            <p>Captura sin ordenar. Ordenas en la revisión semanal.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row" style="justify-content:space-between; margin-bottom:10px">
+            <div class="mini" id="energyRec">Recomendación: Gestionar</div>
+            <button class="btn small ghost" id="applySuggestedMode">🎛️ Aplicar a Bloque 1</button>
+          </div>
+          <div class="timer focus-only" id="timerWrap" style="display:none">
+            <div class="label" id="timerLabel">Timer</div>
+            <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="time" id="timerTime">25:00</div>
+              <div class="row">
+                <button class="btn small" id="timerStop">⏹️ Detener</button>
+                <button class="btn small" id="timerDone">✅ Registrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row focus-only" style="margin:10px 0 2px">
+            <button class="btn" id="timer25">⏱️ 25 min</button>
+            <button class="btn" id="timer50">⏱️ 50 min</button>
+          </div>
+
+          <div class="row">
+            <input class="input" id="inboxInput" placeholder="Escribe una idea / pendiente y presiona Enter">
+            <button class="btn" id="inboxAdd">➕</button>
+          </div>
+          <div class="hr"></div>
+          <div id="inboxList" class="list" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🧠 Bloques por modo</h2>
+            <p>No mezcles modos: Crear/Construir/Gestionar/Cuidar.</p>
+          </div>
+          <button class="btn small" id="blockAdd">➕ Agregar bloque</button>
+        </div>
+        <div class="card-body">
+          <div class="row" style="justify-content:space-between; margin-bottom:10px">
+            <div class="mini" id="energyRec">Recomendación: Gestionar</div>
+            <button class="btn small ghost" id="applySuggestedMode">🎛️ Aplicar a Bloque 1</button>
+          </div>
+          <div class="timer focus-only" id="timerWrap" style="display:none">
+            <div class="label" id="timerLabel">Timer</div>
+            <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="time" id="timerTime">25:00</div>
+              <div class="row">
+                <button class="btn small" id="timerStop">⏹️ Detener</button>
+                <button class="btn small" id="timerDone">✅ Registrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row focus-only" style="margin:10px 0 2px">
+            <button class="btn" id="timer25">⏱️ 25 min</button>
+            <button class="btn" id="timer50">⏱️ 50 min</button>
+          </div>
+
+          <div id="blocksWrap" class="list"></div>
+        </div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🚀 Proyectos activos</h2>
+            <p>Máximo 3 activos. Todo lo demás a Incubadora.</p>
+          </div>
+          <div class="row">
+            <span class="pill" id="projCount">0/3 activos</span>
+            <button class="btn small" id="projAdd">➕ Nuevo activo</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row" style="justify-content:space-between; margin-bottom:10px">
+            <div class="mini" id="energyRec">Recomendación: Gestionar</div>
+            <button class="btn small ghost" id="applySuggestedMode">🎛️ Aplicar a Bloque 1</button>
+          </div>
+          <div class="timer focus-only" id="timerWrap" style="display:none">
+            <div class="label" id="timerLabel">Timer</div>
+            <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="time" id="timerTime">25:00</div>
+              <div class="row">
+                <button class="btn small" id="timerStop">⏹️ Detener</button>
+                <button class="btn small" id="timerDone">✅ Registrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row focus-only" style="margin:10px 0 2px">
+            <button class="btn" id="timer25">⏱️ 25 min</button>
+            <button class="btn" id="timer50">⏱️ 50 min</button>
+          </div>
+
+          <div id="projectsWrap" class="list"></div>
+          <div class="hr"></div>
+          <div class="row" style="justify-content:space-between">
+            <div class="card-title" style="gap:2px">
+              <strong>🧪 Incubadora</strong>
+              <span class="mini">Ideas buenas, sin presión.</span>
+            </div>
+            <button class="btn small" id="incAdd">➕ Agregar</button>
+          </div>
+          <div class="hr"></div>
+          <div id="incWrap" class="list"></div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="grid" aria-label="Bienestar y logros">
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🏁 Logros invisibles (antídoto TDAH)</h2>
+            <p>Tu cerebro suele ver lo que falta. Esto muestra lo que ya hiciste.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="achievements"></div>
+        </div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🤝 Check-in con Belén</h2>
+            <p>Contención vs estructura. Visible, simple, sin desgaste.</p>
+          </div>
+          <a class="btn small" href="pages/weekly.html">🗓️ Registrar</a>
+        </div>
+        <div class="card-body">
+          <div id="checkinSummary"></div>
+        </div>
+      </div>
+    </section>
+
+<section class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🧩 Recordatorio clave</h2>
+            <p>Tu cerebro no necesita más fuerza de voluntad. Necesita arquitectura visible.</p>
+          </div>
+          <a class="btn small" href="pages/weekly.html">🗓️ Ir a revisión semanal</a>
+        </div>
+        <div class="card-body">
+          <div class="row" style="justify-content:space-between; margin-bottom:10px">
+            <div class="mini" id="energyRec">Recomendación: Gestionar</div>
+            <button class="btn small ghost" id="applySuggestedMode">🎛️ Aplicar a Bloque 1</button>
+          </div>
+          <div class="timer focus-only" id="timerWrap" style="display:none">
+            <div class="label" id="timerLabel">Timer</div>
+            <div class="row" style="justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="time" id="timerTime">25:00</div>
+              <div class="row">
+                <button class="btn small" id="timerStop">⏹️ Detener</button>
+                <button class="btn small" id="timerDone">✅ Registrar</button>
+              </div>
+            </div>
+          </div>
+          <div class="row focus-only" style="margin:10px 0 2px">
+            <button class="btn" id="timer25">⏱️ 25 min</button>
+            <button class="btn" id="timer50">⏱️ 50 min</button>
+          </div>
+
+          <div class="tags">
+            <span class="tag ok">Externo</span>
+            <span class="tag ok">Visual</span>
+            <span class="tag ok">Modular</span>
+            <span class="tag ok">Con sentido</span>
+            <span class="tag ok">En equipo (Belén)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal" id="crisisModal" aria-hidden="true" role="dialog" aria-label="Modo saturación">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h3>🚨 Modo Saturación</h3>
+          <div class="mini">Cuando no puedes pensar, el sistema piensa por ti.</div>
+        </div>
+        <button class="btn small" id="crisisClose">✖ Cerrar</button>
+      </div>
+      <div class="modal-body">
+        <div class="item">
+          <div>
+            <strong>Protocolo (20–40 min)</strong>
+            <small>1) Pausa física 3–5 min · 2) Descargar INBOX · 3) Elegir 1 crítica mínima · 4) 25 min ejecución · 5) Cierre con siguiente paso</small>
+          </div>
+          <button class="btn small ghost" id="crisisRead">🔊 Leer</button>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="row" style="flex-wrap:wrap">
+          <button class="btn" id="crisisPause">🫁 Pausa 3 min</button>
+          <button class="btn" id="crisisFocus25">⏱️ Bloque 25 min</button>
+          <button class="btn" id="crisisGoInbox">📥 Ir a INBOX</button>
+          <button class="btn" id="crisisSetCritical">🎯 Definir crítica</button>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="mini">
+          Si el narrador está ON, el protocolo se leerá automáticamente al abrir este modo.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer small">
+    <div class="footer-inner">
+      <div class="logo">
+        <img src="assets/img/logo.svg" alt="Cerebro Extendido" onerror="this.style.display='none'">
+        <div>
+          <div><strong>© NeoTech EduLab</strong> · Cerebro Extendido (Pancho v1.0)</div>
+          <small>🛠️ Prohibida su copia y/o reproducción · Datos guardados localmente (localStorage)</small>
+        </div>
+      </div>
+      <div class="mini">
+        <span class="kbd">Tip</span> <span id="dailyTip">Arquitectura, no voluntad.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

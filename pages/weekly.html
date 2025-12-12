@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Cerebro Extendido · Pancho v1.0</title>
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" aria-label="Ir al Dashboard">
+        <img src="../assets/img/logo.svg" alt="Cerebro Extendido">
+        <div class="title">
+          <strong>Cerebro Extendido</strong>
+          <span>Dashboard TDAH · Pancho v1.0</span>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="btn small" data-nav href="../index.html">🏠 Dashboard</a>
+        <a class="btn small" data-nav href="./weekly.html">🗓️ Semana</a>
+        <a class="btn small" data-nav href="./manual.html">📘 Manual</a>
+        <a class="btn small" data-nav href="./data.html">📊 Datos</a>
+      </nav>
+    </div>
+    <div class="topbar-inner" style="padding-top:0; padding-bottom:12px">
+      <div class="row" style="gap:8px">
+        <span class="pill">Controles inclusivos</span>
+        <button class="btn small" id="btnTheme" title="Tema">🌙/☀️ Tema</button>
+        <button class="btn small" id="btnContrast" title="Alto contraste">♿ Contraste</button>
+        <button class="btn small" id="btnFontDown" title="Disminuir tamaño de letra">A−</button>
+        <button class="btn small" id="btnFontUp" title="Aumentar tamaño de letra">A+</button>
+        <button class="btn small" id="btnNarrator" aria-pressed="false" title="Narrador">🔈 Narrador: OFF</button>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn small ghost" id="btnExport" title="Exportar backup JSON">⬇️ Exportar</button>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+        <button class="btn small ghost" id="btnImport" title="Importar backup JSON">⬆️ Importar</button>
+        <button class="btn small ghost" id="btnReset" title="Reiniciar datos locales">🧹 Reset</button>
+      </div>
+    </div>
+  </header>
+  <main class="container" role="main">
+
+    <section class="grid">
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🗓️ Revisión semanal (30–45 min)</h2>
+            <p>Arquitectura para una semana con foco y sin colapso.</p>
+          </div>
+          <div class="row">
+            <button class="btn small" id="btnSaveWeekly">💾 Guardar</button>
+            <button class="btn small" id="btnApplyProjects">🔁 Sincronizar a activos</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="checklist" class="list"></div>
+        </div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🎯 3 proyectos de la semana</h2>
+            <p>Define nombre + resultado semanal. Luego sincroniza (si hay cupo).</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <label class="mini">Proyecto 1</label>
+          <input class="input" id="p1" placeholder="Ej: PEVE · Panel estudiante v1">
+          <label class="mini" style="margin-top:8px">Resultado semanal</label>
+          <input class="input" id="r1" placeholder="Ej: dejar login + navegación lista">
+
+          <div class="hr"></div>
+
+          <label class="mini">Proyecto 2</label>
+          <input class="input" id="p2" placeholder="Ej: NeoTech · Convenio UBB · anexos PI">
+          <label class="mini" style="margin-top:8px">Resultado semanal</label>
+          <input class="input" id="r2" placeholder="Ej: correo + doc 1 página listo">
+
+          <div class="hr"></div>
+
+          <label class="mini">Proyecto 3</label>
+          <input class="input" id="p3" placeholder="Ej: Bienestar · rutina personal TDAH">
+          <label class="mini" style="margin-top:8px">Resultado semanal</label>
+          <input class="input" id="r3" placeholder="Ej: dashboard estable + métricas diarias">
+
+          <div class="hr"></div>
+
+          <label class="mini">Riesgos y plan B</label>
+          <textarea class="input" id="risks" placeholder="Ej: exceso de reuniones → bloque Crear temprano. Saturación → protocolo 25 min."></textarea>
+
+          <div class="hr"></div>
+
+          <div class="mini">
+            Regla brutal: máximo <strong>3</strong> proyectos activos. El resto es Incubadora (sin culpa).
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="cols">
+          <div class="col-6">
+            <label class="mini">Estado</label>
+            <select class="input" id="checkinMood">
+              <option value="🙂">🙂 Bien</option>
+              <option value="😐">😐 Medio</option>
+              <option value="😣">😣 Saturado</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="mini">Necesito hoy</label>
+            <select class="input" id="checkinNeed">
+              <option value="contencion">🤍 Contención</option>
+              <option value="estructura">🧩 Estructura</option>
+            </select>
+          </div>
+          <div class="col-12" style="grid-column: span 12">
+            <label class="mini">Nota (máx 3 líneas)</label>
+            <textarea class="input" id="checkinNote" placeholder="Ej: Me siento saturado por demasiados frentes. Necesito estructura para priorizar 1–3–5."></textarea>
+          </div>
+        </div>
+        <div class="row" style="justify-content:flex-end; margin-top:10px">
+          <button class="btn" id="saveCheckin">💾 Guardar check-in</button>
+        </div>
+        <div class="hr"></div>
+        <strong class="mini">Historial reciente</strong>
+        <div id="checkinHist" class="list" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🤝 Check-in con Belén (15 min)</h2>
+            <p>Modo equipo: no es dependencia, es inteligencia relacional.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="cols">
+            <div class="col-6">
+              <div class="item">
+                <div>
+                  <strong>Preguntas</strong>
+                  <small>1) ¿Cómo estás mentalmente? 2) ¿Qué te sobrecarga? 3) ¿Qué necesitas esta semana?</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="item">
+                <div>
+                  <strong>Palabras clave</strong>
+                  <small>“Necesito contención” vs “Necesito estructura”</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="cols">
+          <div class="col-6">
+            <label class="mini">Estado</label>
+            <select class="input" id="checkinMood">
+              <option value="🙂">🙂 Bien</option>
+              <option value="😐">😐 Medio</option>
+              <option value="😣">😣 Saturado</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="mini">Necesito hoy</label>
+            <select class="input" id="checkinNeed">
+              <option value="contencion">🤍 Contención</option>
+              <option value="estructura">🧩 Estructura</option>
+            </select>
+          </div>
+          <div class="col-12" style="grid-column: span 12">
+            <label class="mini">Nota (máx 3 líneas)</label>
+            <textarea class="input" id="checkinNote" placeholder="Ej: Me siento saturado por demasiados frentes. Necesito estructura para priorizar 1–3–5."></textarea>
+          </div>
+        </div>
+        <div class="row" style="justify-content:flex-end; margin-top:10px">
+          <button class="btn" id="saveCheckin">💾 Guardar check-in</button>
+        </div>
+        <div class="hr"></div>
+        <strong class="mini">Historial reciente</strong>
+        <div id="checkinHist" class="list" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer small">
+    <div class="footer-inner">
+      <div class="logo">
+        <img src="../assets/img/logo.svg" alt="Cerebro Extendido" onerror="this.style.display='none'">
+        <div>
+          <div><strong>© NeoTech EduLab</strong> · Cerebro Extendido (Pancho v1.0)</div>
+          <small>🛠️ Prohibida su copia y/o reproducción · Datos guardados localmente (localStorage)</small>
+        </div>
+      </div>
+      <div class="mini">
+        <span class="kbd">Tip</span> <span id="dailyTip">Arquitectura, no voluntad.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/js/weekly.js"></script>
+</body>
+</html>

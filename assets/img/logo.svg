@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="120" viewBox="0 0 420 120" role="img" aria-label="NeoTech Cerebro Extendido">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#6ee7ff"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="420" height="120" rx="18" fill="#0b1020"/>
+  <circle cx="70" cy="60" r="32" fill="url(#g)" opacity="0.95"/>
+  <path d="M58 60c8-10 18-16 24-16 14 0 22 12 22 16s-8 16-22 16c-6 0-16-6-24-16z" fill="#0b1020" opacity="0.9"/>
+  <text x="120" y="52" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#e5e7eb" font-weight="700">Cerebro Extendido</text>
+  <text x="120" y="78" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#9ca3af">Dashboard TDAH · Pancho v1.0</text>
+</svg>

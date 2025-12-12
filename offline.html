@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Cerebro Extendido · Pancho v1.0</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="Ir al Dashboard">
+        <img src="assets/img/logo.svg" alt="Cerebro Extendido">
+        <div class="title">
+          <strong>Cerebro Extendido</strong>
+          <span>Dashboard TDAH · Pancho v1.0</span>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="btn small" data-nav href="index.html">🏠 Dashboard</a>
+        <a class="btn small" data-nav href="pages/weekly.html">🗓️ Semana</a>
+        <a class="btn small" data-nav href="pages/manual.html">📘 Manual</a>
+        <a class="btn small" data-nav href="pages/data.html">📊 Datos</a>
+      </nav>
+    </div>
+    <div class="topbar-inner" style="padding-top:0; padding-bottom:12px">
+      <div class="row" style="gap:8px">
+        <span class="pill">Controles inclusivos</span>
+        <button class="btn small" id="btnTheme" title="Tema">🌙/☀️ Tema</button>
+        <button class="btn small" id="btnContrast" title="Alto contraste">♿ Contraste</button>
+        <button class="btn small" id="btnFontDown" title="Disminuir tamaño de letra">A−</button>
+        <button class="btn small" id="btnFontUp" title="Aumentar tamaño de letra">A+</button>
+        <button class="btn small" id="btnNarrator" aria-pressed="false" title="Narrador">🔈 Narrador: OFF</button>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn small ghost" id="btnExport" title="Exportar backup JSON">⬇️ Exportar</button>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+        <button class="btn small ghost" id="btnImport" title="Importar backup JSON">⬆️ Importar</button>
+        <button class="btn small ghost" id="btnReset" title="Reiniciar datos locales">🧹 Reset</button>
+      </div>
+    </div>
+  </header>
+  <main class="container" role="main">
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>📴 Estás offline</h2>
+            <p>Esta plataforma funciona offline. Si ves esto, es porque la ruta no estaba en caché.</p>
+          </div>
+          <a class="btn small" href="index.html">🏠 Volver al dashboard</a>
+        </div>
+        <div class="card-body">
+          <div class="mini">Tip: abre una vez cada sección (Dashboard/Semana/Manual/Datos) para que quede cacheada en tu dispositivo.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer small">
+    <div class="footer-inner">
+      <div class="logo">
+        <img src="assets/img/logo.svg" alt="Cerebro Extendido" onerror="this.style.display='none'">
+        <div>
+          <div><strong>© NeoTech EduLab</strong> · Cerebro Extendido (Pancho v1.0)</div>
+          <small>🛠️ Prohibida su copia y/o reproducción · Datos guardados localmente (localStorage)</small>
+        </div>
+      </div>
+      <div class="mini">
+        <span class="kbd">Tip</span> <span id="dailyTip">Arquitectura, no voluntad.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/ui.js"></script>
+</body>
+</html>

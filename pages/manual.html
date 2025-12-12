@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Cerebro Extendido · Pancho v1.0</title>
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" aria-label="Ir al Dashboard">
+        <img src="../assets/img/logo.svg" alt="Cerebro Extendido">
+        <div class="title">
+          <strong>Cerebro Extendido</strong>
+          <span>Dashboard TDAH · Pancho v1.0</span>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="btn small" data-nav href="../index.html">🏠 Dashboard</a>
+        <a class="btn small" data-nav href="./weekly.html">🗓️ Semana</a>
+        <a class="btn small" data-nav href="./manual.html">📘 Manual</a>
+        <a class="btn small" data-nav href="./data.html">📊 Datos</a>
+      </nav>
+    </div>
+    <div class="topbar-inner" style="padding-top:0; padding-bottom:12px">
+      <div class="row" style="gap:8px">
+        <span class="pill">Controles inclusivos</span>
+        <button class="btn small" id="btnTheme" title="Tema">🌙/☀️ Tema</button>
+        <button class="btn small" id="btnContrast" title="Alto contraste">♿ Contraste</button>
+        <button class="btn small" id="btnFontDown" title="Disminuir tamaño de letra">A−</button>
+        <button class="btn small" id="btnFontUp" title="Aumentar tamaño de letra">A+</button>
+        <button class="btn small" id="btnNarrator" aria-pressed="false" title="Narrador">🔈 Narrador: OFF</button>
+      </div>
+      <div class="row" style="gap:8px">
+        <button class="btn small ghost" id="btnExport" title="Exportar backup JSON">⬇️ Exportar</button>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+        <button class="btn small ghost" id="btnImport" title="Importar backup JSON">⬆️ Importar</button>
+        <button class="btn small ghost" id="btnReset" title="Reiniciar datos locales">🧹 Reset</button>
+      </div>
+    </div>
+  </header>
+  <main class="container" role="main">
+
+    <section class="grid">
+      <div class="card col-8">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>📘 Manual Pancho v1.0</h2>
+            <p>Documento vivo. Se edita con calma. Te sostiene en semanas difíciles.</p>
+          </div>
+          <button class="btn small" id="saveManual">💾 Guardar</button>
+        </div>
+        <div class="card-body">
+          <label class="mini">1) Cómo funciono cuando estoy bien</label>
+          <textarea class="input" id="good"></textarea>
+
+          <div class="hr"></div>
+
+          <label class="mini">2) Señales tempranas de saturación</label>
+          <textarea class="input" id="early"></textarea>
+
+          <div class="hr"></div>
+
+          <label class="mini">3) Gatillantes</label>
+          <textarea class="input" id="triggers"></textarea>
+
+          <div class="hr"></div>
+
+          <label class="mini">4) Protocolo “Saturación”</label>
+          <textarea class="input" id="sat"></textarea>
+
+          <div class="hr"></div>
+
+          <label class="mini">5) Protocolo “Hiperfoco”</label>
+          <textarea class="input" id="hyper"></textarea>
+
+          <div class="hr"></div>
+
+          <label class="mini">6) Acuerdos con Belén (modo equipo)</label>
+          <textarea class="input" id="agreements"></textarea>
+        </div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>🧭 Reglas del sistema</h2>
+            <p>Tu arquitectura. Sin culpas.</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="list">
+            <div class="item"><div><strong>1) Captura una vez</strong><small>INBOX siempre disponible.</small></div></div>
+            <div class="item"><div><strong>2) 1–3–5 diario</strong><small>Si haces 1 crítica, ganaste.</small></div></div>
+            <div class="item"><div><strong>3) No mezclar modos</strong><small>Crear/Construir/Gestionar/Cuidar.</small></div></div>
+            <div class="item"><div><strong>4) Máximo 3 proyectos</strong><small>El resto va a incubadora.</small></div></div>
+            <div class="item"><div><strong>5) Datos simples</strong><small>Medir sin obsesionarse.</small></div></div>
+          </div>
+          <div class="hr"></div>
+          <div class="mini">
+            Consejo: revisa este manual con Belén 1 vez al mes. Ajusten 1 cosa, no 20.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer small">
+    <div class="footer-inner">
+      <div class="logo">
+        <img src="../assets/img/logo.svg" alt="Cerebro Extendido" onerror="this.style.display='none'">
+        <div>
+          <div><strong>© NeoTech EduLab</strong> · Cerebro Extendido (Pancho v1.0)</div>
+          <small>🛠️ Prohibida su copia y/o reproducción · Datos guardados localmente (localStorage)</small>
+        </div>
+      </div>
+      <div class="mini">
+        <span class="kbd">Tip</span> <span id="dailyTip">Arquitectura, no voluntad.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/js/manual.js"></script>
+</body>
+</html>
